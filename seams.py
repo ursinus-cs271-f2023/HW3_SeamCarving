@@ -45,7 +45,7 @@ def plot_seam(img, seam):
     plt.imshow(img)
     X = np.zeros((len(seam), 2))
     X[:, 0] = np.arange(len(seam))
-    X[:, 1] = seam
+    X[:, 1] = np.array(seam, dtype=int)
     plt.plot(X[:, 1], X[:, 0], 'r')
 
 
