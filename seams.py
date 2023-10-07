@@ -61,7 +61,7 @@ def read_image(path):
     Returns
     -------
     ndarray(M, N, 3)
-        An RGB color image in the range [0, 1]
+        An RGB color image in the range [0, 255]
     """
     img = plt.imread(path)
     if np.issubdtype(img.dtype, np.integer):
@@ -73,7 +73,7 @@ def read_image(path):
     if img.size == img.shape[0]*img.shape[1]:
         # Grayscale, convert to rgb
         img = np.concatenate((img[:, :, None], img[:, :, None], img[:, :, None]), axis=2)
-    return img
+    return img*255
 
 if __name__ == '__main__':
     img = read_image("LivingRoom.jpg")
