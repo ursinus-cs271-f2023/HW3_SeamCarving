@@ -77,8 +77,8 @@ def read_image(path):
 
 if __name__ == '__main__':
     img = read_image("LivingRoom.jpg")
-    G = grad_energy(img)
+    E = grad_energy(img)
     plt.figure(figsize=(10, 6))
-    plt.imshow(G, cmap='magma')
+    plt.imshow(E, cmap='magma')
     plt.colorbar()
     plt.savefig("Energy.png", bbox_inches='tight')
