@@ -1,10 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import convolve2d
-from scipy import misc
 
-
-def grad_energy(img, sigma = 3):
+def grad_energy(img, sigma = 3, rescale=255):
     """
     Compute the gradient magnitude of an image by doing
     1D convolutions with the derivative of a Gaussian
@@ -15,11 +12,14 @@ def grad_energy(img, sigma = 3):
         A color image
     sigma: float
         Width of Gaussian to use for filter
-    
+    rescale: float
+        Amount by which to rescale the gradient
+        
     Returns
     -------
     ndarray(M, N): Gradient Image
     """
+    from scipy.signal import convolve2d
     I = 0.2125*img[:, :, 0] + 0.7154*img[:, :, 1] + 0.0721*img[:, :, 2]
     I = I/255
     N = int(sigma*6+1)
@@ -28,8 +28,7 @@ def grad_energy(img, sigma = 3):
     IDx = convolve2d(I, dgauss[None, :], mode='same')
     IDy = convolve2d(I, dgauss[:, None], mode='same')
     GradMag = np.sqrt(IDx**2 + IDy**2)
-    return GradMag
-
+    return rescale*GradMag
 
 def plot_seam(img, seam):
     """
@@ -73,7 +72,7 @@ def read_image(path):
     if img.size == img.shape[0]*img.shape[1]:
         # Grayscale, convert to rgb
         img = np.concatenate((img[:, :, None], img[:, :, None], img[:, :, None]), axis=2)
-    return img*255
+    return img
 
 if __name__ == '__main__':
     img = read_image("LivingRoom.jpg")
